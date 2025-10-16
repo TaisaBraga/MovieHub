@@ -1,13 +1,19 @@
+import { useGetMoviesContext } from "../../Context/useGetMoviesContext";
+import MovieCard from "../Molecules/MovieCard";
+
 export default function MovieList() {
+  const { isMovieList } = useGetMoviesContext();
+
   return (
-    <div className="text-slate-50">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio quasi
-        obcaecati perferendis, laborum eligendi similique voluptas aspernatur
-        nemo ducimus beatae voluptatem dolor voluptates officiis eos eveniet
-        soluta laboriosam est dolorum!
-      </p>
-      
+    <div className="flex flex-wrap items-center justify-center m-6 gap-4">
+      {isMovieList.map((movie) => (
+        <div key={movie?.id}>
+          <MovieCard
+            movieTitle={movie?.title}
+            movieImage={movie?.poster_path}
+          />
+        </div>
+      ))}
     </div>
   );
 }
