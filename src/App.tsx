@@ -1,13 +1,19 @@
-import './App.css'
-import PrincipalPage from './components/Page/PrincipalPage'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import NavigationBar from "./components/Templates/NavigationBar";
+import MoviePage from "./components/Templates/MoviePage";
 
 function App() {
-
   return (
-    <>
-      <PrincipalPage />
-    </>
-  )
+    <BrowserRouter>
+      <div>
+        <NavigationBar />
+        <Routes>
+          <Route path="/" element={<MoviePage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
