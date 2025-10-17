@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import NavigationBar from "./components/Templates/NavigationBar";
-import MoviePage from "./components/Templates/MoviePage";
+import MovieHomePage from "./components/Templates/MovieHomePage";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <div>
         <NavigationBar />
         <Routes>
-          <Route path="/" element={<MoviePage />} />
+          <Route path="/" element={<MovieHomePage />} />
         </Routes>
       </div>
     </BrowserRouter>

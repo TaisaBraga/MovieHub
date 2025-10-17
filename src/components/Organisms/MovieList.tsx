@@ -9,6 +9,7 @@ export default function MovieList() {
       {isMovieList.map((movie) => (
         <div key={movie?.id}>
           <MovieCard
+            className="max-w-[11em] max-h-[17em] cursor-pointer transition group-hover:scale-105"
             movieTitle={movie?.title}
             movieImage={movie?.poster_path}
           />

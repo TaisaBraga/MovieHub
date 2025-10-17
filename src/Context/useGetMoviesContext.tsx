@@ -14,6 +14,13 @@ export interface IMovie {
   id: number;
   title: string;
   poster_path: string;
+  backdrop_path: string;
+  overview: string;
+  popularity: number;
+  release_date: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number
 }
 
 export interface IGetMoviesProps {

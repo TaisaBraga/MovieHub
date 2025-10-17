@@ -1,17 +1,19 @@
 interface ImovieTitle {
   movieTitle: string;
   movieImage: string;
+  className: string
 }
 
 export default function MovieCard({
   movieTitle,
   movieImage,
+  className,
 }: ImovieTitle) {
   return (
-    <div className="group bg-slate-500">
+    <div className="group">
       <a href="./Details">
         <img
-          className="max-w-[11em] max-h-[17em] cursor-pointer transition group-hover:scale-105"
+          className={className}
           src={`https://image.tmdb.org/t/p/w500${movieImage}`}
           alt={`Movie Image - ${movieTitle}`}
         />
