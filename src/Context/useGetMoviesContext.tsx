@@ -40,6 +40,7 @@ export const GetMoviesProvider = ({ children }: React.PropsWithChildren) => {
 
   useEffect(() => {
     const fetchMovies = async () => {
+      await new Promise((resolve) => setTimeout(resolve,3000)); // simula 2s de espera
       try {
         const token = import.meta.env.VITE_TMDB_TOKEN;
         const res = await fetch(
@@ -51,6 +52,7 @@ export const GetMoviesProvider = ({ children }: React.PropsWithChildren) => {
             },
           }
         );
+
 
         const data = await res.json();
         console.log(data);
