@@ -21,6 +21,8 @@ export interface IMovie {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  genreIds: number[];
+  genres: { id: number; name: string }[];
 }
 
 export interface IGetMoviesProps {
@@ -32,6 +34,7 @@ export interface IGetMoviesProps {
 
   isFetchError: boolean;
   setIsFetchError: Dispatch<SetStateAction<boolean>>;
+
 }
 
 export const UseGetMoviesContext = createContext<IGetMoviesProps>(
@@ -45,20 +48,23 @@ export const GetMoviesProvider = ({ children }: React.PropsWithChildren) => {
   const [isMovieList, setIsMovieList] = useState<IMovie[]>([]);
   const [isListError, setIsListError] = useState("");
   const [isFetchError, setIsFetchError] = useState(false);
-  
-  const baseURL = "https://api.themoviedb.org/3/movie";
+
+  const baseURL = "https://api.themoviedb.org/3/";
 
   useEffect(() => {
     const fetchMovies = async () => {
       await new Promise((resolve) => setTimeout(resolve, 3000)); // simula 2s de espera
       try {
         const token = import.meta.env.VITE_TMDB_TOKEN;
-        const res = await fetch(`${baseURL}/popular?language=pt-BR&page=1`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            accept: "application/json",
-          },
-        });
+        const res = await fetch(
+          `${baseURL}movie/popular?language=en-US&page=1`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              accept: "application/json",
+            },
+          }
+        );
 
         if (!res.ok) {
           setIsFetchError(true);

@@ -12,8 +12,12 @@ export default function MovieDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const [movie, setMovie] = useState<IMovie | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { setIsListError, isListError, isFetchError, setIsFetchError } =
-    useGetMoviesContext();
+  const {
+    setIsListError,
+    isListError,
+    isFetchError,
+    setIsFetchError,
+  } = useGetMoviesContext();
 
   useEffect(() => {
     if (!id) return;
@@ -21,7 +25,7 @@ export default function MovieDetailsPage() {
     const token = import.meta.env.VITE_TMDB_TOKEN;
 
     setIsLoading(true);
-    fetch(`https://api.themoviedb.org/3/movie/${id}?language=pt-BR`, {
+    fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, {
       headers: {
         Authorization: `Bearer ${token}`,
         accept: "application/json",
@@ -30,6 +34,7 @@ export default function MovieDetailsPage() {
       .then((res) => res.json())
       .then((data) => {
         setMovie(data);
+        console.log(data)
         setIsLoading(false);
       })
       .catch((err) => {
@@ -39,6 +44,7 @@ export default function MovieDetailsPage() {
         setIsLoading(false);
       });
   }, [id, setIsListError, setIsFetchError]);
+
 
   if (isFetchError)
     return (
@@ -56,7 +62,8 @@ export default function MovieDetailsPage() {
       releaseDate={movie?.release_date || ""}
       popularity={movie?.vote_average.toFixed(1)}
       overview={movie?.overview}
-      image={movie?.backdrop_path}
+      image={movie?.poster_path}
+      genre={movie?.genres[0]?.name}
     />
   );
 }
