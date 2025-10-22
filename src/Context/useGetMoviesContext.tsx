@@ -20,12 +20,18 @@ export interface IMovie {
   release_date: string;
   video: boolean;
   vote_average: number;
-  vote_count: number
+  vote_count: number;
 }
 
 export interface IGetMoviesProps {
   isMovieList: IMovie[];
   setIsMovieList: Dispatch<SetStateAction<IMovie[]>>;
+
+  isListError: string;
+  setIsListError: Dispatch<SetStateAction<string>>;
+
+  isFetchError: boolean;
+  setIsFetchError: Dispatch<SetStateAction<boolean>>;
 }
 
 export const UseGetMoviesContext = createContext<IGetMoviesProps>(
@@ -37,10 +43,12 @@ export const useGetMoviesContext = () =>
 
 export const GetMoviesProvider = ({ children }: React.PropsWithChildren) => {
   const [isMovieList, setIsMovieList] = useState<IMovie[]>([]);
+  const [isListError, setIsListError] = useState("");
+  const [isFetchError, setIsFetchError] = useState(false);
 
   useEffect(() => {
     const fetchMovies = async () => {
-      await new Promise((resolve) => setTimeout(resolve,3000)); // simula 2s de espera
+      await new Promise((resolve) => setTimeout(resolve, 3000)); // simula 2s de espera
       try {
         const token = import.meta.env.VITE_TMDB_TOKEN;
         const res = await fetch(
@@ -53,12 +61,18 @@ export const GetMoviesProvider = ({ children }: React.PropsWithChildren) => {
           }
         );
 
+        if (!res.ok) {
+          setIsFetchError(true);
+          throw new Error(`${res.status}`);
+        }
 
         const data = await res.json();
         console.log(data);
         setIsMovieList(data?.results);
       } catch (error) {
-        console.error(error);
+        const errorMessage = `${error}`;
+        setIsFetchError(true);
+        setIsListError(errorMessage);
       }
     };
 
@@ -68,8 +82,19 @@ export const GetMoviesProvider = ({ children }: React.PropsWithChildren) => {
     () => ({
       isMovieList,
       setIsMovieList,
+      isListError,
+      setIsListError,
+      isFetchError,
+      setIsFetchError,
     }),
-    [isMovieList, setIsMovieList]
+    [
+      isMovieList,
+      setIsMovieList,
+      isListError,
+      setIsListError,
+      isFetchError,
+      setIsFetchError,
+    ]
   );
 
   return (
