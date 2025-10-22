@@ -45,21 +45,20 @@ export const GetMoviesProvider = ({ children }: React.PropsWithChildren) => {
   const [isMovieList, setIsMovieList] = useState<IMovie[]>([]);
   const [isListError, setIsListError] = useState("");
   const [isFetchError, setIsFetchError] = useState(false);
+  
+  const baseURL = "https://api.themoviedb.org/3/movie";
 
   useEffect(() => {
     const fetchMovies = async () => {
       await new Promise((resolve) => setTimeout(resolve, 3000)); // simula 2s de espera
       try {
         const token = import.meta.env.VITE_TMDB_TOKEN;
-        const res = await fetch(
-          "https://api.themoviedb.org/3/movie/popular?language=pt-BR&page=1",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              accept: "application/json",
-            },
-          }
-        );
+        const res = await fetch(`${baseURL}/popular?language=pt-BR&page=1`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            accept: "application/json",
+          },
+        });
 
         if (!res.ok) {
           setIsFetchError(true);
@@ -78,6 +77,8 @@ export const GetMoviesProvider = ({ children }: React.PropsWithChildren) => {
 
     fetchMovies();
   }, []);
+
+
   const value = useMemo(
     () => ({
       isMovieList,

@@ -4,8 +4,10 @@ import NavigationBar from "./components/Templates/NavigationBar";
 import MovieHomePage from "./components/Templates/MovieHomePage";
 import { Suspense } from "react";
 import Loader from "./components/Molecules/Loader";
+import MovieDetailsPage from "./components/Templates/MovieDetailsPage";
 
 function App() {
+
   return (
     <BrowserRouter>
       <div >
@@ -13,6 +15,7 @@ function App() {
         <Suspense fallback={<Loader />}>
           <Routes>
             <Route path="/" element={<MovieHomePage />} />
+            <Route path="/details/:id" element={<MovieDetailsPage />} />
           </Routes>
         </Suspense>
       </div>
