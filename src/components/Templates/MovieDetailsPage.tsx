@@ -12,12 +12,8 @@ export default function MovieDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const [movie, setMovie] = useState<IMovie | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const {
-    setIsListError,
-    isListError,
-    isFetchError,
-    setIsFetchError,
-  } = useGetMoviesContext();
+  const { setIsListError, isListError, isFetchError, setIsFetchError } =
+    useGetMoviesContext();
 
   useEffect(() => {
     if (!id) return;
@@ -34,7 +30,6 @@ export default function MovieDetailsPage() {
       .then((res) => res.json())
       .then((data) => {
         setMovie(data);
-        console.log(data)
         setIsLoading(false);
       })
       .catch((err) => {
@@ -45,6 +40,9 @@ export default function MovieDetailsPage() {
       });
   }, [id, setIsListError, setIsFetchError]);
 
+  const handleSetWatchList = (id?: number) => {
+    console.log("Filme adicionado: ", id);
+  };
 
   if (isFetchError)
     return (
@@ -58,6 +56,7 @@ export default function MovieDetailsPage() {
 
   return (
     <MovieDetails
+      handleSetWatchList={() => handleSetWatchList(movie?.id)}
       title={movie?.title}
       releaseDate={movie?.release_date || ""}
       popularity={movie?.vote_average.toFixed(1)}
