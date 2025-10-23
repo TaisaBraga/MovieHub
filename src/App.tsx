@@ -7,7 +7,7 @@ import Loader from "./components/Molecules/Loader";
 import MovieDetailsPage from "./components/Templates/MovieDetailsPage";
 
 function App() {
-
+    
   return (
     <BrowserRouter>
       <div >
